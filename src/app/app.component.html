@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <input 
+        type="text"
+        [(ngModel)]="filteredStatus">
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers | filter:filteredStatus:'status'"
+          [ngClass]="getStatusClasses(server)">
+          <!-- Les pipes dans le code HTML et permettent de changer une valeur selon une apparence voulue
+          Exemple de pipe deja integre (uppercase, date (recupere seulement la date du jour)
+          L'on peut ajouter un ou plusieurs parametres au pipe en separant par :
+          (date:'fullDate')-->
+          <span
+            class="badge">
+            {{ server.status }}
+          </span>
+          <!-- Le premier pipe est personnel est a pour parametre 5 -->
+          <!-- On peut appliquer plusieurs pipes, mais l'ordre est important
+          le pipe a droite applique le changement a la valeur de gauche, ainsi de suite -->
+          <strong>{{ server.name | shorten:15 }}</strong> | 
+          {{ server.instanceType | uppercase }} | 
+          {{ server.started | date:'fullDate' | uppercase }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
